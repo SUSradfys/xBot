@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xports>
+  <xporter>
+    <name>Delta4</name>
+    <active>true</active>
+    <ipstring>147.220.97.142</ipstring>
+    <port>104</port>
+    <AEtitle>DELTA4</AEtitle>
+    <SQLstring>select UID=RTPlan.PlanUID, PatientId=Patient.PatientId, PlanSer=RTPlan.PlanSetupSer, DateTime=PlanSetup.StatusDate from RTPlan, PlanSetup, Course, Patient where RTPlan.PlanSetupSer=PlanSetup.PlanSetupSer and PlanSetup.Status='PlanApproval' and PlanSetup.StatusDate&gt;'this.lastActive' and (PlanSetup.PlanSetupId like 'QC%D%4%' or PlanSetup.PlanSetupId like 'QC%d%4%') and Course.CourseSer=PlanSetup.CourseSer and Patient.PatientSer=Course.PatientSer order by PlanSetup.StatusDate
+    </SQLstring>
+    <include>
+      <item>plan</item>
+      <item>fieldDose</item>
+    </include>
+    <lastActivity>2016-10-05 10:11:46.417</lastActivity>
+    <allowDoublets>false</allowDoublets>
+  </xporter>
+  <xporter>
+    <name>MonteCarlo</name>
+    <active>false</active>
+    <ipstring>10.0.128.140</ipstring>
+    <port>834</port>
+    <AEtitle>MCQA</AEtitle>
+    <SQLstring>select distinct UID=RTPlan.PlanUID, PatientId=Patient.PatientId, PlanSer=RTPlan.PlanSetupSer, DateTime=PlanSetup.StatusDate from RTPlan, PlanSetup, Course, Patient, Prescription, Radiation, Machine, MLCPlan where RTPlan.PlanSetupSer=PlanSetup.PlanSetupSer and PlanSetup.Status='TreatApproval' and PlanSetup.StatusDate&gt;'this.lastActive' and Course.CourseSer=PlanSetup.CourseSer and Patient.PatientSer=Course.PatientSer and PlanSetup.PrescriptionSer=Prescription.PrescriptionSer and Prescription.Status='Approved' and Radiation.PlanSetupSer=PlanSetup.PlanSetupSer and Machine.ResourceSer=Radiation.ResourceSer and (Machine.MachineId like 'TB%' or Machine.MachineId like 'IX12') and MLCPlan.RadiationSer=Radiation.RadiationSer and MLCPlan.MLCPlanType like 'Dyn%' order by PlanSetup.StatusDate 
+    </SQLstring>
+    <include>
+      <item>plan</item>
+      <item>planDose</item>
+      <item>slices</item>
+      <item>structures</item>
+    </include>
+    <lastActivity>2016-10-04 17:44:11.377</lastActivity>
+    <allowDoublets>false</allowDoublets>
+  </xporter>
+  <xporter>
+    <name>XVIL05</name>
+    <active>false</active>
+    <ipstring>147.220.98.123</ipstring>
+    <port>106</port>
+    <AEtitle>XVI_L05</AEtitle>
+    <SQLstring>select distinct UID=RTPlan.PlanUID, PatientId=Patient.PatientId, PlanSer=RTPlan.PlanSetupSer, DateTime=PlanSetup.StatusDate from RTPlan, PlanSetup, Course, Patient, Prescription, Radiation, Machine where RTPlan.PlanSetupSer=PlanSetup.PlanSetupSer and PlanSetup.Status='TreatApproval' and PlanSetup.StatusDate&gt;'this.lastActive' and Course.CourseSer=PlanSetup.CourseSer and Patient.PatientSer=Course.PatientSer and PlanSetup.PrescriptionSer=Prescription.PrescriptionSer and Prescription.Status='Approved' and Radiation.PlanSetupSer=PlanSetup.PlanSetupSer and Machine.ResourceSer=Radiation.ResourceSer and Machine.MachineId='L05' order by PlanSetup.StatusDate
+    </SQLstring>
+    <include>
+      <item>plan</item>
+      <item>slices</item>
+      <item>structures</item>
+    </include>
+    <lastActivity>2016-10-05 10:21:30.650</lastActivity>
+    <allowDoublets>true</allowDoublets>
+  </xporter>
+  <xporter>
+    <name>XVIL07</name>
+    <active>false</active>
+    <ipstring>147.220.97.116</ipstring>
+    <port>106</port>
+    <AEtitle>XVI_L07</AEtitle>
+    <SQLstring>select distinct UID=RTPlan.PlanUID, PatientId=Patient.PatientId, PlanSer=RTPlan.PlanSetupSer, DateTime=PlanSetup.StatusDate from RTPlan, PlanSetup, Course, Patient, Prescription, Radiation, Machine where RTPlan.PlanSetupSer=PlanSetup.PlanSetupSer and PlanSetup.Status='TreatApproval' and PlanSetup.StatusDate&gt;'this.lastActive' and Course.CourseSer=PlanSetup.CourseSer and Patient.PatientSer=Course.PatientSer and PlanSetup.PrescriptionSer=Prescription.PrescriptionSer and Prescription.Status='Approved' and Radiation.PlanSetupSer=PlanSetup.PlanSetupSer and Machine.ResourceSer=Radiation.ResourceSer and Machine.MachineId='L07' order by PlanSetup.StatusDate
+    </SQLstring>
+    <include>
+      <item>plan</item>
+      <item>slices</item>
+      <item>structures</item>
+    </include>
+    <lastActivity>2016-10-04 11:50:46.393</lastActivity>
+    <allowDoublets>true</allowDoublets>
+  </xporter>
+  <xporter>
+    <name>XVIL09</name>
+    <active>false</active>
+    <ipstring>147.220.96.62</ipstring>
+    <port>106</port>
+    <AEtitle>XVI_L09</AEtitle>
+    <SQLstring>select distinct UID=RTPlan.PlanUID, PatientId=Patient.PatientId, PlanSer=RTPlan.PlanSetupSer, DateTime=PlanSetup.StatusDate from RTPlan, PlanSetup, Course, Patient, Prescription, Radiation, Machine where RTPlan.PlanSetupSer=PlanSetup.PlanSetupSer and PlanSetup.Status='TreatApproval' and PlanSetup.StatusDate&gt;'this.lastActive' and Course.CourseSer=PlanSetup.CourseSer and Patient.PatientSer=Course.PatientSer and PlanSetup.PrescriptionSer=Prescription.PrescriptionSer and Prescription.Status='Approved' and Radiation.PlanSetupSer=PlanSetup.PlanSetupSer and Machine.ResourceSer=Radiation.ResourceSer and Machine.MachineId='L09' order by PlanSetup.StatusDate
+    </SQLstring>
+    <include>
+      <item>plan</item>
+      <item>slices</item>
+      <item>structures</item>
+    </include>
+    <lastActivity>2016-10-05 10:40:14.497</lastActivity>
+    <allowDoublets>true</allowDoublets>
+  </xporter>
+  <xporter>
+    <name>iView</name>
+    <active>false</active>
+    <ipstring>147.220.97.26</ipstring>
+    <port>104</port>
+    <AEtitle>IVIEWSHAPER</AEtitle>
+    <SQLstring>select distinct UID=RTPlan.PlanUID, PatientId=Patient.PatientId, PlanSer=RTPlan.PlanSetupSer, DateTime=PlanSetup.StatusDate from RTPlan, PlanSetup, Course, Patient, Prescription, Radiation, Machine where RTPlan.PlanSetupSer=PlanSetup.PlanSetupSer and PlanSetup.Status='TreatApproval' and PlanSetup.StatusDate&gt;'this.lastActive' and Course.CourseSer=PlanSetup.CourseSer and Patient.PatientSer=Course.PatientSer and PlanSetup.PrescriptionSer=Prescription.PrescriptionSer and Prescription.Status='Approved' and Radiation.PlanSetupSer=PlanSetup.PlanSetupSer and Machine.ResourceSer=Radiation.ResourceSer and Machine.MachineId like 'L%' order by PlanSetup.StatusDate
+    </SQLstring>
+    <include>
+      <item>plan</item>
+      <item>images</item>
+    </include>
+    <lastActivity>2016-10-05 10:40:14.497</lastActivity>
+    <allowDoublets>false</allowDoublets>
+  </xporter>
+  <xporter>
+    <name>Catalyst</name>
+    <active>false</active>
+    <ipstring>10.0.128.122</ipstring>
+    <port>104</port>
+    <AEtitle>CATALYST</AEtitle>
+    <SQLstring>select distinct UID=RTPlan.PlanUID, PatientId=Patient.PatientId, PlanSer=RTPlan.PlanSetupSer, DateTime=PlanSetup.StatusDate from RTPlan, PlanSetup, Course, Patient, Prescription, Radiation where RTPlan.PlanSetupSer=PlanSetup.PlanSetupSer and PlanSetup.Status='TreatApproval' and PlanSetup.StatusDate&gt;'this.lastActive' and Course.CourseSer=PlanSetup.CourseSer and Patient.PatientSer=Course.PatientSer and PlanSetup.PrescriptionSer=Prescription.PrescriptionSer and Prescription.Status='Approved' and Radiation.PlanSetupSer=PlanSetup.PlanSetupSer 
+order by PlanSetup.StatusDate
+    </SQLstring>
+    <include>
+      <item>plan</item>
+      <item>images</item>
+    </include>
+    <lastActivity>2016-10-05 10:56:00.677</lastActivity>
+    <allowDoublets>false</allowDoublets>
+  </xporter>
+</xports>
