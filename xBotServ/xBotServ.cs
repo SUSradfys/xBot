@@ -47,20 +47,33 @@ namespace xBotServ
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            timer.Stop(); // Stop timer during execution of xBot.Main()
-            // Logging
-            DateTime now = DateTime.Now;
-            //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.", EventLogEntryType.Information);
-            Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.");
+            DateTime now;
+            // verify that the ARIADBDaemon Windows Service is running
+            string serviceName = "vmsdicom_ARIADB";
+            ServiceController sc = new ServiceController(serviceName);
+            if (sc.Status == ServiceControllerStatus.Running)
+            { 
+                timer.Stop(); // Stop timer during execution of xBot.Main()
+                // Logging
+                now = DateTime.Now;
+                //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.", EventLogEntryType.Information);
+                Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.");
 
-            // Execute main of xBot
-            xBot.Program.Main();
+                // Execute main of xBot
+                xBot.Program.Main();
 
-            // Logging
-            now = DateTime.Now;
-            //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": xBot spin completed.", EventLogEntryType.Information);
-            Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": xBot spin completed.");
-            timer.Start(); // Restart timer after execution of xBot.Main()
+                // Logging
+                now = DateTime.Now;
+                //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": xBot spin completed.", EventLogEntryType.Information);
+                Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": xBot spin completed.");
+                timer.Start(); // Restart timer after execution of xBot.Main()
+            }
+            else
+            {
+                // Logging
+                now = DateTime.Now;
+                Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
+            }
         }
 
         protected override void OnStop()

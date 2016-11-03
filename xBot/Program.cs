@@ -16,9 +16,7 @@ namespace xBot
     /// <summary>
     /// xBot sends instructions to a ARIA Database Daemon service.
     /// The information is used to conduct a DICOM CMOVE operation from the ARIA OIS to third party systems.
-    /// Information about the reciever is relayed from xBot to the ARIA DB Daemon service. 
-    /// The actual communication occurs between the ARIA DB Daemon and the third party system.
-    /// The EvilDICOM (https://github.com/rexcardan/Evil-DICOM) library is used heavily in xBot.
+    /// The EvilDICOM (https://github.com/rexcardan/Evil-DICOM) library is used as a middle hand.
     /// </summary>
     public class Program
     {
