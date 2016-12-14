@@ -14,6 +14,7 @@ namespace xBotServ
     public partial class xBotServ : ServiceBase
     {
         private static string logFile = @"C:\Program Files\xBot\xBot.log";
+        private const string recipient = "rickard.cronholm@skane.se";
         private Timer timer = new Timer();
         //private static string[] mainArgs;
         public xBotServ()
@@ -60,7 +61,16 @@ namespace xBotServ
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.");
 
                 // Execute main of xBot
-                xBot.Program.Main();
+                try
+                {
+                    xBot.Program.Main();
+                }
+                catch (Exception e)
+                {
+
+                    // send mail
+                    sendMail.Program.send(recipient, "xBot reports issue", now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + e.Message);
+                }
 
                 // Logging
                 now = DateTime.Now;
@@ -73,6 +83,8 @@ namespace xBotServ
                 // Logging
                 now = DateTime.Now;
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
+                // send mail
+                sendMail.Program.send(recipient, "xBot not running", now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
             }
         }
 

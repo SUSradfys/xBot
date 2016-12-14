@@ -16,14 +16,11 @@ namespace xBot
         public static string ARIA_PASSWORD = getFromXml(settings_file, "ARIA_PASSWORD");
         public static string ARIA_DATABASE = getFromXml(settings_file, "ARIA_DATABASE");
 
-        public static string RESULT_SERVER = getFromXml(settings_file, "RESULT_SERVER");
-        public static string RESULT_USERNAME = getFromXml(settings_file, "RESULT_USERNAME");
-        public static string RESULT_PASSWORD = getFromXml(settings_file, "RESULT_PASSWORD");
+        //public static string RESULT_SERVER = getFromXml(settings_file, "RESULT_SERVER");
+        //public static string RESULT_USERNAME = getFromXml(settings_file, "RESULT_USERNAME");
+        //public static string RESULT_PASSWORD = getFromXml(settings_file, "RESULT_PASSWORD");
 
         public static string xPorterPath = @"C:\Program Files\xBot\xPorts.xml";
-
-        private static double minsAgo = 5 * 24 * 60;
-        public static DateTime earliest = DateTime.Now.AddMinutes(-minsAgo);
 
         private static string getFromXml(string file, string varible)
         {
