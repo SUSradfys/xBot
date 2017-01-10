@@ -1,15 +1,10 @@
 ﻿using EvilDICOM.Network;
 using EvilDICOM.Network.Querying;
-using EvilDICOM.Core;
-using EvilDICOM.Network.DIMSE;
 using EvilDICOM.Network.DIMSE.IOD;
 using System;
 using System.Data;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Sockets;
 using System.Xml;
-using System.Linq;
 
 namespace xBot
 {
@@ -63,9 +58,6 @@ namespace xBot
                 List<CFindImageIOD> iods = new List<CFindImageIOD>();
                 foreach (DataRow row in plans.Rows)
                 {
-                    //DateTime last = (DateTime)row["DateTime"];
-                    //Console.WriteLine((string)row["PatientId"] + ": " + last.ToString("yyyy-MM-dd hh:mm:ss.fff"));
-                    //Console.WriteLine((string)row["PatientId"] + ": " + row["PlanSer"].ToString());
                     var patId = (string)row["PatientId"];
                     var planUID = (string)row["UID"];
                     iods.Add(new CFindImageIOD() { PatientId = patId, SOPInstanceUID = planUID });

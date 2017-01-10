@@ -48,12 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ProjectInstaller.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ProjectInstaller.Designer.cs">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </Compile>
     <Compile Include="xBotServ.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -67,9 +61,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ProjectInstaller.resx">
-      <DependentUpon>ProjectInstaller.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="xBotServ.resx">
       <DependentUpon>xBotServ.cs</DependentUpon>
     </EmbeddedResource>

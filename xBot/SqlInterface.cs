@@ -33,7 +33,8 @@ namespace xBot
             }
             catch (Exception exception)
             {
-                System.Windows.Forms.MessageBox.Show(exception.Message, "SQL Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                //System.Windows.Forms.MessageBox.Show(exception.Message, "SQL Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+                Console.WriteLine(exception.Message);
             }
 
             return dataTable;

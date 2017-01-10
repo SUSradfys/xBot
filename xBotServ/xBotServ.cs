@@ -16,20 +16,10 @@ namespace xBotServ
         private static string logFile = @"C:\Program Files\xBot\xBot.log";
         private const string recipient = "rickard.cronholm@skane.se";
         private Timer timer = new Timer();
-        //private static string[] mainArgs;
         public xBotServ()
         {
 
             InitializeComponent();
-            /*
-            eventLog = new System.Diagnostics.EventLog();
-            if (!System.Diagnostics.EventLog.SourceExists("MySource"))
-            {
-                System.Diagnostics.EventLog.CreateEventSource("MySource", "MynewLog");
-            }
-            eventLog.Source = "MySource";
-            eventLog.Log = "MyNewLog";
-            */
         }
 
         protected override void OnStart(string[] args)
@@ -57,7 +47,6 @@ namespace xBotServ
                 timer.Stop(); // Stop timer during execution of xBot.Main()
                 // Logging
                 now = DateTime.Now;
-                //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.", EventLogEntryType.Information);
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.");
 
                 // Execute main of xBot
@@ -74,7 +63,6 @@ namespace xBotServ
 
                 // Logging
                 now = DateTime.Now;
-                //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": xBot spin completed.", EventLogEntryType.Information);
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": xBot spin completed.");
                 timer.Start(); // Restart timer after execution of xBot.Main()
             }
@@ -92,7 +80,6 @@ namespace xBotServ
         {
             // Logging
             DateTime now = DateTime.Now;
-            //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Service Stopped");
             Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Service stopped");
         }
 
