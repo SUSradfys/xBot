@@ -12,11 +12,11 @@ namespace xBot
         public static List<CFindImageIOD> Unique(List<CFindImageIOD> source)
         {
             List<CFindImageIOD> uniques = new List<CFindImageIOD>();
-            foreach (CFindImageIOD iod in source)
-            {
-                //if (!uniques.Contains(iod)) uniques.Add(iod);
-                if (!uniques.Select(u => u.SOPInstanceUID).ToList().Contains(iod.SOPInstanceUID)) uniques.Add(iod);
-            }
+            uniques = source
+                .GroupBy(u => u.SOPInstanceUID)
+                .Select(g => g.First())
+                .ToList();
+
             return uniques;
         }
     }
