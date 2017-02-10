@@ -38,7 +38,10 @@ namespace xBotServ
 
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
-            DateTime now;
+            DateTime now = DateTime.Now;
+            // skip sundays 00:00 - 05:00 since the VSS service shuts down, for approx 90 mins on sundays at 00:00.
+            if (now.DayOfWeek == DayOfWeek.Sunday && now.Hour < 5)
+                return;
             // verify that the ARIADBDaemon Windows Service is running
             string serviceName = "vmsdicom_ARIADB";
             ServiceController sc = new ServiceController(serviceName);
@@ -46,7 +49,6 @@ namespace xBotServ
             { 
                 timer.Stop(); // Stop timer during execution of xBot.Main()
                 // Logging
-                now = DateTime.Now;
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.");
 
                 // Execute main of xBot
@@ -69,7 +71,6 @@ namespace xBotServ
             else
             {
                 // Logging
-                now = DateTime.Now;
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
                 // send mail
                 sendMail.Program.send(recipient, "xBot not running", now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
