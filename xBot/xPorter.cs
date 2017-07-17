@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EvilDICOM.Network;
 using System.Xml;
 using System.Data;
+using System.Net;
 
 namespace xBot
 {
@@ -23,7 +24,7 @@ namespace xBot
             this.ip = node.SelectSingleNode("//ipstring").InnerText;
             this.AEtitle = node.SelectSingleNode("//AEtitle").InnerText;
             Int32.TryParse(node.SelectSingleNode("//port").InnerText, out this.port);
-            this.reciever = new Entity(AEtitle, ip, port);
+            this.reciever = new Entity(AEtitle, getIP(ip), port);
             this.scp = new DICOMSCP(reciever);
             this.active = XmlConvert.ToBoolean(node.SelectSingleNode("//active").InnerText);
             this.lastActive = node.SelectSingleNode("//lastActivity").InnerText;
@@ -72,6 +73,20 @@ namespace xBot
         {
             DataTable plans = SqlInterface.Query(this.sqlString.Replace("this.lastActive", this.lastActive));
             return plans;
+        }
+
+        private string getIP(string dns)
+        {
+            string ip = String.Empty;
+            try
+            {
+                ip = Dns.GetHostAddresses(dns)[0].ToString();
+            }
+            catch
+            {
+                ip = dns;
+            }
+            return ip;
         }
     }
 }

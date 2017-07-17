@@ -16,6 +16,7 @@ namespace xBotServ
         private static string logFile = @"C:\Program Files\xBot\xBot.log";
         private const string recipient = "rickard.cronholm@skane.se";
         private Timer timer = new Timer();
+        private int serviceFailCount;
         public xBotServ()
         {
 
@@ -24,6 +25,7 @@ namespace xBotServ
 
         protected override void OnStart(string[] args)
         {
+            serviceFailCount = 0;
             // Logging
             DateTime now = DateTime.Now;
             //eventLog.WriteEntry(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Service started");
@@ -46,7 +48,8 @@ namespace xBotServ
             string serviceName = "vmsdicom_ARIADB";
             ServiceController sc = new ServiceController(serviceName);
             if (sc.Status == ServiceControllerStatus.Running)
-            { 
+            {
+                serviceFailCount = 0;
                 timer.Stop(); // Stop timer during execution of xBot.Main()
                 // Logging
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Taking xBot for a spin.");
@@ -74,6 +77,10 @@ namespace xBotServ
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
                 // send mail
                 sendMail.Program.send(recipient, "xBot not running", now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
+                serviceFailCount += 1;
+                if (serviceFailCount == 5)
+                    OnStop();
+
             }
         }
 
@@ -82,6 +89,8 @@ namespace xBotServ
             // Logging
             DateTime now = DateTime.Now;
             Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": Service stopped");
+            // send mail
+            sendMail.Program.send(recipient, "xBot stopped", now.ToString("yyyy-MM-dd HH:mm:ss") + " xBot stopped.");
         }
 
         private void Log(string log)
