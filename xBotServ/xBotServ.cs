@@ -41,8 +41,8 @@ namespace xBotServ
         public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
         {
             DateTime now = DateTime.Now;
-            // skip sundays 00:00 - 05:00 since the VSS service shuts down, for approx 90 mins on sundays at 00:00.
-            if (now.DayOfWeek == DayOfWeek.Sunday && now.Hour < 5)
+            // skip sundays and 00:00 - 05:00 since the VSS service shuts down, for approx 90 mins on sundays at 00:00. and reboots daily at 04.00
+            if (now.DayOfWeek == DayOfWeek.Sunday || now.Hour < 5)
                 return;
             // verify that the ARIADBDaemon Windows Service is running
             string serviceName = "vmsdicom_ARIADB";
@@ -57,13 +57,20 @@ namespace xBotServ
                 // Execute main of xBot
                 try
                 {
-                    xBot.Program.Main();
+                    var task = Task.Run(() => xBot.Program.Main());
+                    if (!task.Wait(TimeSpan.FromHours(1)))
+                        throw new Exception("Timed out");
+                    //xBot.Program.Main();
                 }
                 catch (Exception e)
                 {
 
                     // send mail
                     sendMail.Program.send(recipient, "xBot reports issue", now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + e.Message);
+                    // stop xBot Service
+                    ServiceController xBotServ = new ServiceController("xBot");
+                    xBotServ.Stop();
+                    OnStop();
                 }
 
                 // Logging
@@ -75,11 +82,17 @@ namespace xBotServ
             {
                 // Logging
                 Log(now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
+                // restart sc
+                sc.Start();
                 // send mail
-                sendMail.Program.send(recipient, "xBot not running", now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running, xBot not deployed.");
+                sendMail.Program.send(recipient, "xBot not running", now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + serviceName + " not running - I've restarted it for you, xBot not deployed.");
                 serviceFailCount += 1;
                 if (serviceFailCount == 5)
+                { 
+                    ServiceController xBotServ = new ServiceController("xBot");
+                    xBotServ.Stop();
                     OnStop();
+                }
 
             }
         }
