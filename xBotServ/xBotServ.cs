@@ -14,7 +14,7 @@ namespace xBotServ
     public partial class xBotServ : ServiceBase
     {
         private static string logFile = @"C:\Program Files\xBot\xBot.log";
-        private const string recipient = "rickard.cronholm@skane.se";
+        private const string recipient = "accing@skane.se";
         private Timer timer = new Timer();
         private int serviceFailCount;
         public xBotServ()
